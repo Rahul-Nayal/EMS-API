@@ -29,7 +29,10 @@ namespace Backend.Business
             {
                 return null;
             }
-
+            if (registerRequestDto.Password != registerRequestDto.ConfirmPassword)
+            {
+                throw new Exception("Password doesn't match");
+            }
             var user = new IdentityUser
             {
                 UserName = registerRequestDto.UserName,

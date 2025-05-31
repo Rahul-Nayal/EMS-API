@@ -84,6 +84,8 @@ builder.Services.AddScoped<IAssetType, AssetTypeService>();
 builder.Services.AddScoped<ISalaryStructure, SalaryStructureService>();
 builder.Services.AddScoped<IContactDetails, ContactDetailsService>();
 builder.Services.AddScoped<IAssetType, AssetTypeService>();
+builder.Services.AddScoped<IFamilyService, FamilyDetailService>();
+builder.Services.AddScoped<IEducationService, EducationService>();
 // builder.Services.AddScoped<I>();
 builder.Services.AddDataProtection();
 
@@ -121,7 +123,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     }
     );
 
-builder.Services.AddAuthorization(options=>
+builder.Services.AddAuthorization(options =>
 {
     var permissionType = typeof(Permission);
     var permissions = permissionType.GetNestedTypes()
@@ -136,6 +138,18 @@ builder.Services.AddAuthorization(options=>
     }
 }
 );
+
+builder.Services.AddCors(Options =>
+{
+    Options.AddPolicy("ReactPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -144,7 +158,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("ReactPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 

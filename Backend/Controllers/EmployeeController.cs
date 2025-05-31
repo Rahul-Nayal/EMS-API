@@ -32,6 +32,7 @@ namespace Backend.Controllers
             var users = await employeeRepository.GetAllAsync();
             if (users != null)
             {
+                // return Ok(mapper.Map<EmployeeRequestDto>(users));
                 return Ok(users);
             }
             return BadRequest("Something Went Wrong");

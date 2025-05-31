@@ -12,6 +12,7 @@ namespace Backend.Model.Dto
         public string UserName { get; set; }
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        public string [] Roles { get; set;}
+        public string ConfirmPassword { get; set; }
+        public string[] Roles { get; set; }
     }
 }

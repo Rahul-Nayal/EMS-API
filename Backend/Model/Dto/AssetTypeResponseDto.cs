@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using Backend.Model.Domain;
 
 namespace Backend.Model.Dto
 {
-    public class AssetTypeRequestDto
+    public class AssetTypeResponseDto
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid? AssetImageUrl { get; set; }
+
+        [NotMapped]
+        public IFormFile File { get; set; }
     }
 }

@@ -78,9 +78,6 @@ namespace Backend.Business
             eMSDbContext.JobRoles.Update(exisitingRole);
             await eMSDbContext.SaveChangesAsync();
             return exisitingRole;
-        }
-
-
-        
+        }        
     }
 }

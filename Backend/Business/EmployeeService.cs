@@ -21,9 +21,29 @@ namespace Backend.Business
             this.userManager = userManager;
         }
 
-        public Task<List<Employee>> GetAllAsync()
+        public Task<List<EmployeeRequestDto>> GetAllAsync()
         {
-            var employee = eMSDbContext.Employees.ToListAsync();
+            var employee = eMSDbContext.Employees
+                .Include(d => d.Department)
+                .Include(j => j.JobRole)
+                .Where(e => !e.IsDeleted)
+                .Select(e => new EmployeeRequestDto
+                {
+                    Id = e.Id,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    Gender = e.Gender,
+                    ProfileImageUrl = e.ProfileImageUrl,
+                    DOB = e.DOB,
+                    HireDate = e.HireDate,
+                    TerminationDate = e.TerminationDate,
+                    Status = e.Status,
+                    DepartmentId = e.DepartmentId,
+                    DepartmentName = e.Department.DepartmentName,
+                    JobRoleId = e.JobRoleId,
+                    JobRoleName = e.JobRole.Title,
+                }).ToListAsync();
+
             if (employee == null)
             {
                 return null;
@@ -31,14 +51,42 @@ namespace Backend.Business
             return employee;
         }
 
-        public async Task<Employee> GetByIdAsync(Guid id)
+        public async Task<EmployeeRequestDto> GetByIdAsync(Guid id)
         {
-            var existingEmployee = await eMSDbContext.Employees.FindAsync(id);
-            if (existingEmployee == null)
-            {
-                return null;
-            }
-            return existingEmployee;
+            // var existingEmployee = await eMSDbContext.Employees.FindAsync(id);
+            // if (existingEmployee == null)
+            // {
+            //     return null;
+            // }
+            var searchedEmployee = await  eMSDbContext.Employees
+                                .Include(d => d.Department)
+                                .Include(j => j.JobRole)
+                                .Where(e => !e.IsDeleted)
+                                .Where(e=> e.Id == id)
+                                .Select(e => new EmployeeRequestDto
+                                {
+
+            // var searchedEmployee = new EmployeeRequestDto
+            // {
+                                    Id = id,
+                                    FirstName = e.FirstName,
+                                    LastName = e.LastName,
+                                    Gender = e.Gender,
+                                    DOB = e.DOB,
+                                    HireDate = e.HireDate,
+                                    TerminationDate = e.TerminationDate , 
+                                    Status = e.Status,
+                                    DepartmentId = e.DepartmentId,
+                                    DepartmentName = e.Department!=null ? e.Department.DepartmentName : null,
+                                    JobRoleId = e.JobRoleId,
+                                    JobRoleName =e.JobRole!=null ? e.JobRole.Title:null
+                                // };
+                                }).FirstOrDefaultAsync();
+            // if (searchedEmployee == null)
+            // {
+            //     return null;
+            // }
+            return searchedEmployee;
         }
 
         public async Task<EmployeeResponseDto> AddAsync(EmployeeResponseDto employeeResponseDto)

@@ -19,5 +19,6 @@ namespace Backend.Model.Dto
         public string UserId { get; set; }
         public Guid JobRoleId { get; set; }
         public Guid DepartmentId { get; set; }
+        public Guid FamilyDetail { get; set; }
     }
 }

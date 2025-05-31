@@ -57,23 +57,40 @@ namespace Backend.Business
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public TokenPair GenerateTokenPair(IdentityUser user, List<string> roles)
+    public TokenPair GenerateTokenPair(IdentityUser user, List<string> roles)
         {
-            var accessToken = createJWToken(user, roles);
+            var existingRefreshToken =   eMSDbContext.RefreshTokens.FirstOrDefault(usr=> usr.UserId == user.Id);
             var refreshToken = GenerateRefreshToken();
+            var accessToken = createJWToken(user, roles);
             var permission = GeneratePermission(roles);
-
-            // StoreRefreshTokenInRedis(user.Id, refreshToken);
-
-            var refreshTokenModel = new RefreshToken
+            if (existingRefreshToken != null)
             {
-                UserId = user.Id,
-                Token = refreshToken,
-                Expire = DateTime.Now.AddDays(7)
+                existingRefreshToken.Token = refreshToken;
+                existingRefreshToken.Expire = DateTime.Now.AddDays(7);
 
-            };
+                eMSDbContext.RefreshTokens.Update(existingRefreshToken);
+                eMSDbContext.SaveChangesAsync();
+                return new TokenPair
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = existingRefreshToken.Token,
+                    Permissions = permission
+                };
+            }
+            else
+            {
 
-            eMSDbContext.RefreshTokens.Add(refreshTokenModel);
+                var refreshTokenModel = new RefreshToken
+                {
+                    UserId = user.Id,
+                    Token = refreshToken,
+                    Expire = DateTime.Now.AddDays(7)
+
+                };
+                eMSDbContext.RefreshTokens.Add(refreshTokenModel);
+            }
+            // var refreshToken = GenerateRefreshToken();
+            // StoreRefreshTokenInRedis(user.Id, refreshToken);
             eMSDbContext.SaveChanges();
 
             return new TokenPair
@@ -83,6 +100,33 @@ namespace Backend.Business
                 Permissions = permission
             };
         }
+        // public TokenPair GenerateTokenPair(IdentityUser user, List<string> roles)
+        // {
+
+        //     var accessToken = createJWToken(user, roles);
+        //     var refreshToken = GenerateRefreshToken();
+        //     var permission = GeneratePermission(roles);
+
+        //     // StoreRefreshTokenInRedis(user.Id, refreshToken);
+
+        //     var refreshTokenModel = new RefreshToken
+        //     {
+        //         UserId = user.Id,
+        //         Token = refreshToken,
+        //         Expire = DateTime.Now.AddDays(7)
+
+        //     };
+
+        //     eMSDbContext.RefreshTokens.Add(refreshTokenModel);
+        //     eMSDbContext.SaveChanges();
+
+        //     return new TokenPair
+        //     {
+        //         AccessToken = accessToken,
+        //         RefreshToken = refreshToken,
+        //         Permissions = permission
+        //     };
+        // }
 
         public string GenerateRefreshToken()
         {

@@ -20,6 +20,11 @@ namespace Backend.Mapper
             CreateMap<SalaryStructure, SalaryStructureDto>().ReverseMap();
             CreateMap<ContactDetails, ContactDetailsRequestDto>().ReverseMap();
             CreateMap<AssetType, AssetTypeRequestDto>().ReverseMap();
+            CreateMap<FamilyDetail, FamilyDetailRequestDto>().ReverseMap();
+            CreateMap<FamilyDetail, FamilyDetailResponseDto>().ReverseMap();
+            CreateMap<FamilyMemberDetail, FamilyMemberResponseDto>().ReverseMap();
+            CreateMap<Education, EducationResponseDto>().ReverseMap();
+            CreateMap<Education, EducationRequestDto>().ReverseMap();
             CreateMap<Department, DepartmentResponseDto>().ReverseMap()
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())

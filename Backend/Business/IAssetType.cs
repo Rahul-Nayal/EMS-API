@@ -10,8 +10,8 @@ namespace Backend.Business
     public interface IAssetType
     {
         Task<List<AssetType>> GetAllAsync();
-        Task<AssetTypeRequestDto> CreateAsync(AssetTypeRequestDto assetTypeRequestDto);
-        Task<AssetTypeRequestDto> UpdateAsync(Guid id,AssetTypeRequestDto assetTypeRequestDto);
+        Task<AssetTypeResponseDto> CreateAsync(AssetTypeResponseDto assetTypeResponseDto);
+        Task<AssetTypeResponseDto> UpdateAsync(Guid id,AssetTypeResponseDto assetTypeResponseDto);
         Task<AssetType> DeleteAsync(Guid id);
     }
 }

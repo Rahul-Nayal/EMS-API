@@ -10,6 +10,7 @@ namespace Backend.Model.Dto
 {
     public class EmployeeRequestDto
     {
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
@@ -18,9 +19,11 @@ namespace Backend.Model.Dto
         public DateTime HireDate { get; set; }
         public DateTime? TerminationDate { get; set; }
         public bool Status { get; set; } = true;
-        public string UserId { get; set; }
-        public Guid JobRoleId { get; set; }
+        // public string UserId { get; set; }
         public Guid DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
+        public Guid JobRoleId { get; set; }
+        public string JobRoleName { get; set; }
        
     }
 }

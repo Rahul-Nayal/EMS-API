@@ -54,17 +54,34 @@ namespace Backend.Controllers
             }
             var tokenPair = jWToken.GenerateTokenPair(exisitingUser, roles.ToList());
 
-
-            var response = new LoginResponseDto
+            Response.Cookies.Append("accessToken", tokenPair.AccessToken, new CookieOptions
             {
-                JWToken = tokenPair.AccessToken,
-                RefreshToken = tokenPair.RefreshToken,
-                Permissions = tokenPair.Permissions 
-            };
-            return Ok(response);
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.Now.AddMinutes(15)
+            });
+
+            Response.Cookies.Append("refreshToken", tokenPair.RefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.Now.AddDays(7)
+            });
+            // var response = new LoginResponseDto
+            // {
+            //     JWToken = tokenPair.AccessToken,
+            //     RefreshToken = tokenPair.RefreshToken,
+            //     Permissions = tokenPair.Permissions 
+            // };
+            return Ok(new
+            {
+                message = "User login successfully",
+                permission = tokenPair.Permissions
+            });
 
         }
-
 
         [HttpPost]
         [Route("Refresh")]

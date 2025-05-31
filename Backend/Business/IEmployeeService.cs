@@ -10,8 +10,8 @@ namespace Backend.Business
 {
     public interface IEmployeeService
     {
-        Task<List<Employee>> GetAllAsync();
-        Task<Employee> GetByIdAsync(Guid id);
+        Task<List<EmployeeRequestDto>> GetAllAsync();
+        Task<EmployeeRequestDto> GetByIdAsync(Guid id);
         Task<EmployeeResponseDto> AddAsync(EmployeeResponseDto employeeResponseDto);
         Task<Employee> UpdateAsync(Guid id, Employee employee);
         Task<Employee> DeleteAsync(Guid id); 

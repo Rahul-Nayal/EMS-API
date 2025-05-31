@@ -48,7 +48,7 @@ namespace Backend.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
-        public async Task<IActionResult> Update(Guid id, [FromForm] AssetTypeRequestDto assetTypeRequestDto)
+        public async Task<IActionResult> Update(Guid id, [FromForm] AssetTypeResponseDto assetTypeResponseDto)
         {
             // var assetsTypeDomainModel = mapper.Map<AssetType>(assetTypeRequestDto);
             // ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -60,7 +60,7 @@ namespace Backend.Controllers
             // departmentDomain.UpdatedAt = DateTime.Now;
             // departmentDomain.IsDeleted = false;
             
-            var result = await assetType.UpdateAsync(id, assetTypeRequestDto);
+            var result = await assetType.UpdateAsync(id, assetTypeResponseDto);
             if (result != null)
             {
                 return Ok(mapper.Map<AssetTypeRequestDto>(result));
@@ -70,10 +70,10 @@ namespace Backend.Controllers
 
         [HttpPost]
         // [Route("{}")]
-        public async Task<IActionResult> Create([FromForm] AssetTypeRequestDto assetTypeRequestDto)
+        public async Task<IActionResult> Create([FromForm] AssetTypeResponseDto assetTypeResponseDto)
         {
             // var assetsTypeDomainModel = mapper.Map<AssetType>(assetTypeRequestDto);
-            var assetsDomainResult = await assetType.CreateAsync(assetTypeRequestDto);
+            var assetsDomainResult = await assetType.CreateAsync(assetTypeResponseDto);
             if (assetsDomainResult != null)
             {
                 return Ok(mapper.Map<AssetTypeRequestDto>(assetsDomainResult));
