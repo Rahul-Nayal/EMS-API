@@ -28,7 +28,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = Permission.Permission.JobRole.View)]
+        // [Authorize(Policy = Permission.Permission.JobRole.View)]
         public async Task<IActionResult> GetAll()
         {
             var result = await jobRoleRepository.GetAllAsync();
@@ -55,7 +55,7 @@ namespace Backend.Controllers
 
         // [Authorize(Roles = "Admin")]
         [HttpPost]
-        [Authorize(Policy = Permission.Permission.JobRole.Create)]
+        // [Authorize(Policy = Permission.Permission.JobRole.Create)]
         public async Task<IActionResult> Create([FromBody] JobRoleRequestDto jobRoleRequestDto)
         {
             ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;

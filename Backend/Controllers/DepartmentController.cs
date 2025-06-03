@@ -29,7 +29,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = Permission.Permission.Department.View)]
+        // [Authorize(Policy = Permission.Permission.Department.View)]
         public async Task<IActionResult> GetAll()
         {
             var departmentDomain = await departmentRepository.GetAllAsync();
@@ -56,7 +56,7 @@ namespace Backend.Controllers
 
 
         [HttpPost]
-        [Authorize(Policy = Permission.Permission.Department.Create)]
+        // [Authorize(Policy = Permission.Permission.Department.Create)]
         public async Task<IActionResult> Create([FromBody] DepartmentResponseDto departmentResponseDto)
         {
             // var currUser = HttpContext?.User?.Identity.??"System";

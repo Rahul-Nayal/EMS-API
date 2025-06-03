@@ -25,6 +25,12 @@ namespace Backend.Mapper
             CreateMap<FamilyMemberDetail, FamilyMemberResponseDto>().ReverseMap();
             CreateMap<Education, EducationResponseDto>().ReverseMap();
             CreateMap<Education, EducationRequestDto>().ReverseMap();
+            CreateMap<LeaveType, LeaveTypeRequestDto>().ReverseMap();
+            CreateMap<LeaveType, LeaveTypeResponseDto>().ReverseMap();
+            CreateMap<Leave, LeaveRequestDto>().ReverseMap();
+            CreateMap<Leave, LeaveResponseDto>().ReverseMap();
+            CreateMap<LeaveBalance, LeaveBalanceRequestDto>().ReverseMap();
+            CreateMap<LeaveBalance, LeaveBalanceResponseDto>().ReverseMap();
             CreateMap<Department, DepartmentResponseDto>().ReverseMap()
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())

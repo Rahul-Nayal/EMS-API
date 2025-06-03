@@ -4,6 +4,7 @@ using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(EMSDbContext))]
-    partial class EMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250603053715_LeaveModelUpdated")]
+    partial class LeaveModelUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -482,23 +485,41 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("longtext");
+
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<Guid>("LeaveTypeId")
                         .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("RequestedOn")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -507,46 +528,6 @@ namespace Backend.Migrations
                     b.HasIndex("LeaveTypeId");
 
                     b.ToTable("Leaves");
-                });
-
-            modelBuilder.Entity("Backend.Model.Domain.LeaveBalance", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("AcceptedLeave")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CarryOverBalance")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CurrentBalance")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("ExpiredLeave")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PreviousBalance")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RejectedLeave")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalBalance")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsedLeave")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("LeaveBalances");
                 });
 
             modelBuilder.Entity("Backend.Model.Domain.LeaveType", b =>
@@ -1189,229 +1170,194 @@ namespace Backend.Migrations
                         {
                             Id = 53,
                             ClaimType = "Permission",
-                            ClaimValue = "LeaveBalance.View",
+                            ClaimValue = "SalaryStructure.View",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 54,
                             ClaimType = "Permission",
-                            ClaimValue = "LeaveBalance.Create",
+                            ClaimValue = "SalaryStructure.Create",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 55,
                             ClaimType = "Permission",
-                            ClaimValue = "LeaveUpdate.Update",
+                            ClaimValue = "SalaryStructure.Update",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 56,
                             ClaimType = "Permission",
-                            ClaimValue = "LeaveBalance.Delete",
+                            ClaimValue = "SalaryStructure.Delete",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 57,
                             ClaimType = "Permission",
-                            ClaimValue = "SalaryStructure.View",
+                            ClaimValue = "Payroll.View",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 58,
                             ClaimType = "Permission",
-                            ClaimValue = "SalaryStructure.Create",
+                            ClaimValue = "Payroll.Create",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 59,
                             ClaimType = "Permission",
-                            ClaimValue = "SalaryStructure.Update",
+                            ClaimValue = "Payroll.Update",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 60,
                             ClaimType = "Permission",
-                            ClaimValue = "SalaryStructure.Delete",
+                            ClaimValue = "Payroll.Delete",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 61,
                             ClaimType = "Permission",
-                            ClaimValue = "Payroll.View",
+                            ClaimValue = "Project.View",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 62,
                             ClaimType = "Permission",
-                            ClaimValue = "Payroll.Create",
+                            ClaimValue = "Project.Create",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 63,
                             ClaimType = "Permission",
-                            ClaimValue = "Payroll.Update",
+                            ClaimValue = "Project.Update",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 64,
                             ClaimType = "Permission",
-                            ClaimValue = "Payroll.Delete",
+                            ClaimValue = "Project.Delete",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 65,
                             ClaimType = "Permission",
-                            ClaimValue = "Project.View",
+                            ClaimValue = "EmployeeProject.View",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 66,
                             ClaimType = "Permission",
-                            ClaimValue = "Project.Create",
+                            ClaimValue = "EmployeeProject.Assign",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 67,
                             ClaimType = "Permission",
-                            ClaimValue = "Project.Update",
+                            ClaimValue = "EmployeeProject.Unassign",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 68,
                             ClaimType = "Permission",
-                            ClaimValue = "Project.Delete",
+                            ClaimValue = "EmployeeProject.UpdateRole",
                             RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
                         },
                         new
                         {
                             Id = 69,
                             ClaimType = "Permission",
-                            ClaimValue = "EmployeeProject.View",
-                            RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
-                        },
-                        new
-                        {
-                            Id = 70,
-                            ClaimType = "Permission",
-                            ClaimValue = "EmployeeProject.Assign",
-                            RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
-                        },
-                        new
-                        {
-                            Id = 71,
-                            ClaimType = "Permission",
-                            ClaimValue = "EmployeeProject.Unassign",
-                            RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
-                        },
-                        new
-                        {
-                            Id = 72,
-                            ClaimType = "Permission",
-                            ClaimValue = "EmployeeProject.UpdateRole",
-                            RoleId = "1d8c4ef2-7b23-4b92-a7e2-178bfe7ecf63"
-                        },
-                        new
-                        {
-                            Id = 73,
-                            ClaimType = "Permission",
                             ClaimValue = "Employee.View",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 74,
+                            Id = 70,
                             ClaimType = "Permission",
                             ClaimValue = "Employee.Attendance.View",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 75,
+                            Id = 71,
                             ClaimType = "Permission",
                             ClaimValue = "Employee.Attendance.Create",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 76,
+                            Id = 72,
                             ClaimType = "Permission",
                             ClaimValue = "Employee.Attendance.Update",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 77,
+                            Id = 73,
                             ClaimType = "Permission",
                             ClaimValue = "Employee.Certificate.View",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 78,
+                            Id = 74,
                             ClaimType = "Permission",
                             ClaimValue = "Employee.Education.View",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 79,
+                            Id = 75,
                             ClaimType = "Permission",
                             ClaimValue = "Employee.WorkExperience.View",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 80,
+                            Id = 76,
                             ClaimType = "Permission",
                             ClaimValue = "Employee.ContactDetails.View",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 81,
+                            Id = 77,
                             ClaimType = "Permission",
                             ClaimValue = "Employee.FamilyDetail.View",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 82,
+                            Id = 78,
                             ClaimType = "Permission",
                             ClaimValue = "Leave.View",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 83,
-                            ClaimType = "Permission",
-                            ClaimValue = "LeaveBalance.View",
-                            RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
-                        },
-                        new
-                        {
-                            Id = 84,
+                            Id = 79,
                             ClaimType = "Permission",
                             ClaimValue = "Payroll.View",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
                         },
                         new
                         {
-                            Id = 85,
+                            Id = 80,
                             ClaimType = "Permission",
                             ClaimValue = "Asset.View",
                             RoleId = "7f99b3c4-6cf1-44b7-b62b-e7411b52a89d"
@@ -1737,17 +1683,6 @@ namespace Backend.Migrations
                     b.Navigation("Employee");
 
                     b.Navigation("LeaveType");
-                });
-
-            modelBuilder.Entity("Backend.Model.Domain.LeaveBalance", b =>
-                {
-                    b.HasOne("Backend.Model.Domain.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Backend.Model.Domain.Payroll", b =>

@@ -108,6 +108,14 @@ namespace Backend.Permission
             public const string Delete = "Leave.Delete";
         }
 
+        public static class LeaveBalance
+        {
+            public const string View = "LeaveBalance.View";
+            public const string Create = "LeaveBalance.Create";
+            public const string Update = "LeaveUpdate.Update";
+            public const string Delete = "LeaveBalance.Delete";
+        }
+
         public static class SalaryStructure
         {
             public const string View = "SalaryStructure.View";

@@ -7,6 +7,7 @@ using AutoMapper;
 using Backend.Business;
 using Backend.Model.Domain;
 using Backend.Model.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -24,6 +25,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = Permission.Permission.AssetType.View)]
         public async Task<IActionResult> GetAll()
         {
             var result = await assetType.GetAllAsync();
@@ -48,6 +50,7 @@ namespace Backend.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize(Policy = Permission.Permission.Employee.Update)]
         public async Task<IActionResult> Update(Guid id, [FromForm] AssetTypeResponseDto assetTypeResponseDto)
         {
             // var assetsTypeDomainModel = mapper.Map<AssetType>(assetTypeRequestDto);
@@ -59,7 +62,7 @@ namespace Backend.Controllers
             // departmentDomain.UpdatedBy = currUser;
             // departmentDomain.UpdatedAt = DateTime.Now;
             // departmentDomain.IsDeleted = false;
-            
+
             var result = await assetType.UpdateAsync(id, assetTypeResponseDto);
             if (result != null)
             {
@@ -70,6 +73,7 @@ namespace Backend.Controllers
 
         [HttpPost]
         // [Route("{}")]
+        [Authorize(Policy = Permission.Permission.AssetType.View)]
         public async Task<IActionResult> Create([FromForm] AssetTypeResponseDto assetTypeResponseDto)
         {
             // var assetsTypeDomainModel = mapper.Map<AssetType>(assetTypeRequestDto);
@@ -84,6 +88,7 @@ namespace Backend.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Policy = Permission.Permission.AssetType.Delete)]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await assetType.DeleteAsync(id);

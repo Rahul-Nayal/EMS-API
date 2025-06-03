@@ -7,6 +7,7 @@ using Backend.Business;
 using Backend.Model.Domain;
 using Backend.Model.Dto;
 using Backend.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,7 @@ namespace Backend.Controllers
 
         [HttpGet]
         [Route("ViewAll")]
+        [Authorize(Policy = Permission.Permission.Employee.View)]
         public async Task<IActionResult> GetAll()
         {
             var users = await employeeRepository.GetAllAsync();
@@ -38,8 +40,10 @@ namespace Backend.Controllers
             return BadRequest("Something Went Wrong");
         }
 
+ 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Policy = Permission.Permission.Employee.View)]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var user = await employeeRepository.GetByIdAsync(id);
@@ -50,7 +54,9 @@ namespace Backend.Controllers
             return BadRequest("Something went wrong");
         }
 
+
         [HttpPost]
+        // [Authorize(Policy = Permission.Permission.Employee.Create)]
         public async Task<IActionResult> Add([FromBody] EmployeeResponseDto employeeResponseDto)
         {
             // var newEmployee = new Employee
@@ -78,6 +84,7 @@ namespace Backend.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize(Policy = Permission.Permission.Employee.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] EmployeeRequestDto employeeRequestDto)
         {
             var updatedUserDomain = mapper.Map<Employee>(employeeRequestDto);
@@ -92,6 +99,7 @@ namespace Backend.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Policy = Permission.Permission.Employee.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var deletedEmployee = await employeeRepository.DeleteAsync(id);

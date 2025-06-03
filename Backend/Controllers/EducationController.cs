@@ -7,6 +7,7 @@ using AutoMapper;
 using Backend.Business;
 using Backend.Model.Domain;
 using Backend.Model.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -25,6 +26,7 @@ namespace Backend.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Policy = Permission.Permission.Employee.Education.View)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var educationDetails = await educationService.GetAsync(id);
@@ -37,6 +39,7 @@ namespace Backend.Controllers
 
         [HttpPost]
         [Route("{id:Guid}")]
+        [Authorize(Policy = "CreateUpdateEmployeeEducation")]
         public async Task<IActionResult> AddUpdate([FromRoute] Guid id, [FromBody] EducationResponseDto educationResponseDto)
         {
             var educationDomain = mapper.Map<Education>(educationResponseDto);
@@ -56,6 +59,7 @@ namespace Backend.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Policy = Permission.Permission.Employee.Education.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var deletedEducationResult = await educationService.DeleteAsync(id);

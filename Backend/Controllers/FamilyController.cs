@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Backend.Business;
 using Backend.Model.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -24,6 +25,7 @@ namespace Backend.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Policy = Permission.Permission.Employee.FamilyDetail.View)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var familyDetails = await familyService.GetAsync(id);
@@ -36,6 +38,7 @@ namespace Backend.Controllers
 
         [HttpPost]
         [Route("{id:Guid}")]
+        [Authorize(Policy =Permission.Permission.Employee.FamilyDetail.Create)]
         public async Task<IActionResult> Add([FromRoute] Guid id, [FromBody] FamilyDetailResponseDto familyDetailResponseDto)
         {
             var result = await familyService.AddUpdateAsync(id, familyDetailResponseDto);
@@ -48,6 +51,7 @@ namespace Backend.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Policy = Permission.Permission.Employee.FamilyDetail.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var deletedMember = await familyService.DeleteAsync(id);

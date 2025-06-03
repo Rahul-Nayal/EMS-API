@@ -86,6 +86,9 @@ builder.Services.AddScoped<IContactDetails, ContactDetailsService>();
 builder.Services.AddScoped<IAssetType, AssetTypeService>();
 builder.Services.AddScoped<IFamilyService, FamilyDetailService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
+builder.Services.AddScoped<ILeaveTypeService, LeaveTypeService>();
+builder.Services.AddScoped<ILeaveService, LeaveService>();
+builder.Services.AddScoped<ILeaveBalanceService, LeaveBalanceService>();
 // builder.Services.AddScoped<I>();
 builder.Services.AddDataProtection();
 
@@ -131,9 +134,17 @@ builder.Services.AddAuthorization(options =>
         .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
         .Select(fi => (string)fi.GetRawConstantValue())
         .ToList();
-
+    options.AddPolicy("CreateUpdateEmployeeEducation", policy =>
+                 policy.RequireAssertion(context =>
+                    context.User.HasClaim("Permission", "Employee.Education.Create") ||
+                    context.User.HasClaim("Permission","Employee.Education.Update")
+                 ));
     foreach (var permission in permissions)
     {
+        if (permission == "Employee.Education.Create" || permission == "Employee.Education.Update")
+        {
+            continue;   
+        }
         options.AddPolicy(permission, policy => policy.RequireClaim("Permission", permission));
     }
 }

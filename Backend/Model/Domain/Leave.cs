@@ -18,13 +18,13 @@ namespace Backend.Model.Domain
         public Guid LeaveTypeId { get; set; }
         [ForeignKey("LeaveTypeId")]
         public LeaveType LeaveType { get; set; }
-
+        public string ApprovedBy { get; set; }
+        public DateTime ApprovalDate { get; set; }
         public LeaveStatus Status { get; set; }
+        public DateTime RequestedOn { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
     }
-
     public enum LeaveStatus
     {
         Approved,

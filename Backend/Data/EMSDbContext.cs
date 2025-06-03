@@ -35,6 +35,7 @@ namespace Backend.Data
         public DbSet<WorkExperience> WorkExperiences { get; set; }
         public DbSet<SalaryStructure> SalaryStructures { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<LeaveBalance> LeaveBalances { get; set; }
 
         // seedind data
         protected override void OnModelCreating(ModelBuilder builder)
@@ -124,6 +125,11 @@ namespace Backend.Data
                 Permission.Permission.Leave.Update,
                 Permission.Permission.Leave.Delete,
 
+                Permission.Permission.LeaveBalance.View,
+                Permission.Permission.LeaveBalance.Create,
+                Permission.Permission.LeaveBalance.Update,
+                Permission.Permission.LeaveBalance.Delete,
+
                 Permission.Permission.SalaryStructure.View,
                 Permission.Permission.SalaryStructure.Create,
                 Permission.Permission.SalaryStructure.Update,
@@ -143,6 +149,7 @@ namespace Backend.Data
                 Permission.Permission.EmployeeProject.Assign,
                 Permission.Permission.EmployeeProject.Unassign,
                 Permission.Permission.EmployeeProject.UpdateRole
+
             };
             int claimId = 1;
             foreach (var permission in adminPermission)
@@ -168,6 +175,7 @@ namespace Backend.Data
                 Permission.Permission.Employee.ContactDetails.View,
                 Permission.Permission.Employee.FamilyDetail.View,
                 Permission.Permission.Leave.View,
+                Permission.Permission.LeaveBalance.View,
                 Permission.Permission.Payroll.View,
                 Permission.Permission.Asset.View,
             };
